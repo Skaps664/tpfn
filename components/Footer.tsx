@@ -1,10 +1,13 @@
+import PixelField from "@/components/PixelField";
+
 const productLinks = ["THE NETWORK", "THE PUBLICATION", "WAYS IN", "FAQ"];
 const companyLinks = ["WHY TPFN", "WHO IT'S FOR", "CONTACT"];
 const resourceLinks = ["INSTAGRAM", "EMAIL", "APPLY"];
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col w-full bg-[#050505]">
+    <footer className="relative isolate flex flex-col w-full bg-[#050505]">
+      <PixelField />
       {/* Top */}
       <div className="flex flex-col md:flex-row gap-12 md:gap-10 lg:gap-[80px] px-6 md:px-12 lg:px-[120px] py-12 md:py-[64px]">
         {/* Brand */}

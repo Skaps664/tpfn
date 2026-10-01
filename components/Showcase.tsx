@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SectionHeader from "./SectionHeader";
+import PixelField from "@/components/PixelField";
 
 const slides = [
   {
@@ -63,7 +64,8 @@ export default function Showcase() {
   const slide = slides[active];
 
   return (
-      <section id="showcase" className="flex flex-col w-full bg-[#080808] pt-16 md:pt-[100px] pb-0 gap-8 md:gap-[48px]">
+      <section id="showcase" className="relative isolate flex flex-col w-full bg-[#080808] pt-16 md:pt-[100px] pb-0 gap-8 md:gap-[48px]">
+        <PixelField />
       {/* Header */}
       <div className="flex items-end justify-between px-6 md:px-12 lg:px-[120px]">
         <SectionHeader

@@ -1,4 +1,5 @@
 import SectionHeader from "./SectionHeader";
+import PixelField from "@/components/PixelField";
 
 const rows = [
   { feature: "VETTED FOUNDERS ONLY", tpfn: "[✓]", groups: "[✗]", events: "[✗]", feeds: "[✗]" },
@@ -23,7 +24,8 @@ function cellColor(val: string) {
 
 export default function Comparison() {
   return (
-    <section id="comparison" className="flex flex-col w-full bg-[#050505] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]">
+    <section id="comparison" className="relative isolate flex flex-col w-full bg-[#050505] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]">
+      <PixelField />
       <SectionHeader
         label="[06] // VS. THE REST"
         title={"WHY A ROOM\nBEATS A CROWD."}

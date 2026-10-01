@@ -1,8 +1,10 @@
 import SectionHeader from "./SectionHeader";
+import PixelField from "@/components/PixelField";
 
 export default function Bento() {
   return (
-    <section className="flex flex-col w-full bg-[#0D0D0D] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-10 md:gap-[48px]">
+    <section className="relative isolate flex flex-col w-full bg-[#0D0D0D] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-10 md:gap-[48px]">
+      <PixelField />
       <SectionHeader
         label="[05] // WHAT'S INSIDE"
         title={"PART NETWORK.\nPART PUBLICATION."}

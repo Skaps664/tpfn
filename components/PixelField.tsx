@@ -9,12 +9,27 @@ const TWINKLE_RATE = 0.00025; // chance per cell per frame to spark
 
 type Spark = { life: number; max: number; orange: boolean };
 
+const TONES = {
+  // Light pixels with green/orange glow, for the dark sections
+  light: { base: "255,255,255", baseAlpha: 0.028, glow: "57,255,20", spark: "255,107,53", glowMax: 0.45 },
+  // Dark pixels, for the neon-green Stats band
+  dark: { base: "10,10,10", baseAlpha: 0.06, glow: "10,10,10", spark: "10,10,10", glowMax: 0.35 },
+};
+
+interface PixelFieldProps {
+  /** Soft green bloom at the top (hero only) */
+  bloom?: boolean;
+  tone?: keyof typeof TONES;
+}
+
 /**
- * Interactive pixel-grid background. Cells glow green near the cursor,
- * random pixels spark and fade, and everything eases back to dark.
- * Sits absolutely inside a `relative` parent; never captures pointer events.
+ * Interactive pixel-grid background. Cells glow near the cursor, random
+ * pixels spark and fade, and everything eases back to dark. Put it as the
+ * first child of a `relative isolate` section: it paints above the section's
+ * background but below its content, and never captures pointer events.
+ * The grid is aligned to page coordinates so stacked sections join seamlessly.
  */
-export default function PixelField() {
+export default function PixelField({ bloom = false, tone = "light" }: PixelFieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -24,6 +39,7 @@ export default function PixelField() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const t = TONES[tone];
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let w = 0;
@@ -46,7 +62,7 @@ export default function PixelField() {
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cols = Math.ceil(w / CELL) + 1;
-      rows = Math.ceil(h / CELL) + 1;
+      rows = Math.ceil(h / CELL) + 2;
       glow = new Float32Array(cols * rows);
       sparks = new Map();
       if (reduceMotion) draw();
@@ -66,7 +82,9 @@ export default function PixelField() {
       ctx.clearRect(0, 0, w, h);
       const size = CELL - GAP;
       const offX = (w % CELL) / 2;
-      const offY = 0;
+      // Snap rows to the page-wide grid so neighbouring sections line up
+      const pageTop = parent.getBoundingClientRect().top + window.scrollY;
+      const offY = -(((pageTop % CELL) + CELL) % CELL);
 
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -95,22 +113,19 @@ export default function PixelField() {
           const s = sparks.get(i);
           if (s) {
             s.life++;
-            const t = s.life / s.max;
-            spark = Math.sin(t * Math.PI) * 0.55;
+            const progress = s.life / s.max;
+            spark = Math.sin(progress * Math.PI) * 0.55;
             orange = s.orange;
             if (s.life >= s.max) sparks.delete(i);
           }
 
-          // Base pixel: very faint, fades toward bottom so the hero stays readable
-          const fade = 1 - Math.min(1, y / h) * 0.6;
-          ctx.fillStyle = `rgba(255,255,255,${0.028 * fade})`;
+          // Base pixel: very faint
+          ctx.fillStyle = `rgba(${t.base},${t.baseAlpha})`;
           ctx.fillRect(x, y, size, size);
 
-          const lit = Math.max(glow[i] * 0.45, spark);
+          const lit = Math.max(glow[i] * t.glowMax, spark);
           if (lit > 0.01) {
-            ctx.fillStyle = orange && spark > glow[i]
-              ? `rgba(255,107,53,${lit * fade})`
-              : `rgba(57,255,20,${lit * fade})`;
+            ctx.fillStyle = `rgba(${orange && spark > glow[i] ? t.spark : t.glow},${lit})`;
             ctx.fillRect(x, y, size, size);
           }
         }
@@ -143,27 +158,21 @@ export default function PixelField() {
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
     };
-  }, []);
+  }, [tone]);
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0" />
-      {/* Soft green bloom behind the headline */}
-      <div
-        className="absolute left-1/2 top-[-10%] h-[70%] w-[90%] -translate-x-1/2"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(57,255,20,0.10) 0%, rgba(57,255,20,0.03) 35%, transparent 70%)",
-        }}
-      />
-      {/* Edge vignette so the grid melts into the page */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 35%, transparent 40%, #0A0A0A 100%), linear-gradient(to bottom, transparent 70%, #0A0A0A 100%)",
-        }}
-      />
+      {bloom && (
+        // Soft green bloom behind the headline
+        <div
+          className="absolute left-1/2 top-[-10%] h-[70%] w-[90%] -translate-x-1/2"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(57,255,20,0.10) 0%, rgba(57,255,20,0.03) 35%, transparent 70%)",
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -1,10 +1,12 @@
 "use client";
 
 import GlitchText from "@/components/GlitchText";
+import PixelField from "@/components/PixelField";
 
 export default function FinalCTA() {
   return (
-    <section className="flex flex-col items-center w-full bg-[#0A0A0A] py-16 px-6 md:py-[120px] md:px-12 lg:px-[120px] gap-10 md:gap-[48px] border-t-2 border-t-[#39FF14]">
+    <section className="relative isolate flex flex-col items-center w-full bg-[#0A0A0A] py-16 px-6 md:py-[120px] md:px-12 lg:px-[120px] gap-10 md:gap-[48px] border-t-2 border-t-[#39FF14]">
+      <PixelField />
       {/* Badge */}
       <div className="flex items-center justify-center gap-[8px] h-[32px] px-[16px] bg-[#1A1A1A] border-2 border-[#39FF14]">
         <span className="font-ibm-mono text-[11px] font-bold text-[#39FF14] tracking-[2px]">

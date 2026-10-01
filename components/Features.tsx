@@ -1,4 +1,5 @@
 import SectionHeader from "./SectionHeader";
+import PixelField from "@/components/PixelField";
 
 interface FeatureCardProps {
   iconColor: string;
@@ -47,8 +48,9 @@ export default function Features() {
   return (
     <section
       id="features"
-      className="flex flex-col w-full bg-[#0A0A0A] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]"
+      className="relative isolate flex flex-col w-full bg-[#0A0A0A] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]"
     >
+      <PixelField />
       <SectionHeader
         label="[01] // WHY TPFN?"
         title={"THE PEOPLE EXIST.\nTHEY'RE SCATTERED."}

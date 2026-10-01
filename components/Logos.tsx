@@ -1,8 +1,11 @@
+import PixelField from "@/components/PixelField";
+
 const logos = ["KARACHI", "LAHORE", "ISLAMABAD", "PESHAWAR", "FAISALABAD"];
 
 export default function Logos() {
   return (
-    <section className="flex flex-col items-center w-full bg-[#0F0F0F] py-[48px] px-6 md:px-12 lg:px-[120px] gap-[32px]">
+    <section className="relative isolate flex flex-col items-center w-full bg-[#0F0F0F] py-[48px] px-6 md:px-12 lg:px-[120px] gap-[32px]">
+      <PixelField />
       <span className="font-ibm-mono text-[11px] text-[#444444] tracking-[3px]">
         GREAT FOUNDERS ARE BUILDING IN
       </span>

@@ -1,3 +1,5 @@
+import PixelField from "@/components/PixelField";
+
 const stats = [
   { value: "30", label: "BUSINESSES / QUARTER", border: true },
   { value: "30", label: "FOUNDERS / QUARTER", border: true },
@@ -7,7 +9,8 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section className="flex flex-col w-full bg-[#39FF14] py-12 px-6 md:py-[80px] md:px-12 lg:px-[120px]">
+    <section className="relative isolate flex flex-col w-full bg-[#39FF14] py-12 px-6 md:py-[80px] md:px-12 lg:px-[120px]">
+      <PixelField tone="dark" />
       <span className="font-ibm-mono text-[12px] font-bold text-[#0A0A0A] tracking-[3px]">
         [03] // BY THE NUMBERS
       </span>

@@ -1,4 +1,5 @@
 import SectionHeader from "./SectionHeader";
+import PixelField from "@/components/PixelField";
 
 interface PricingCardProps {
   tier: string;
@@ -133,7 +134,8 @@ const NOMINATE_FEATURES = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="flex flex-col w-full bg-[#080808] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]">
+    <section id="pricing" className="relative isolate flex flex-col w-full bg-[#080808] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]">
+      <PixelField />
       <SectionHeader
         label="[09] // WAYS IN"
         title={"THREE WAYS\nIN."}

@@ -15,9 +15,7 @@ export default function Hero() {
   return (
     <section className="relative flex flex-col items-center w-full bg-[#0A0A0A] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] overflow-hidden isolate">
       {/* Interactive pixel-grid background */}
-      <div className="absolute inset-0 -z-10">
-        <PixelField />
-      </div>
+      <PixelField bloom />
 
       {/* Badge */}
       <div className="flex items-center justify-center gap-[8px] h-[32px] px-[12px] md:px-[16px] bg-[#1A1A1A] border-2 border-[#39FF14]">

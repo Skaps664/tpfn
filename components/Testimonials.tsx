@@ -1,4 +1,5 @@
 import SectionHeader from "./SectionHeader";
+import PixelField from "@/components/PixelField";
 
 interface TestimonialCardProps {
   quote: string;
@@ -40,7 +41,8 @@ function TestimonialCard({
 
 export default function Testimonials() {
   return (
-    <section className="flex flex-col w-full bg-[#0A0A0A] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]">
+    <section className="relative isolate flex flex-col w-full bg-[#0A0A0A] py-16 px-6 md:py-[100px] md:px-12 lg:px-[120px] gap-12 md:gap-[64px]">
+      <PixelField />
       <SectionHeader
         label="[04] // WHO IT'S FOR"
         title={"ABOUT\nYOU."}
